@@ -1,0 +1,1 @@
+ostress -S"Z-AP-SQL-04" -d"AdventureWorks2022" -E -n32 -r1 -Q"EXECUTE sp_executesql N'SELECT * FROM AdventureWorks2022.HumanResources.Employee WHERE BusinessEntityID = @level', N'@level TINYINT', @level = 109;"
