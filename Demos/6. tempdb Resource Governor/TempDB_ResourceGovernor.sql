@@ -5,13 +5,6 @@ GO
 
 -- let's create a resource pool, no limits being set here - CONFIRM THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 CREATE RESOURCE POOL [TempDBPool]
-WITH
-(
-    MIN_CPU_PERCENT = 0,
-    MAX_CPU_PERCENT = 100,   
-    CAP_CPU_PERCENT = 100,
-    MAX_MEMORY_PERCENT = 100  
-);
 GO
 
 

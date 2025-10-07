@@ -21,6 +21,16 @@ sudo mount -t tmpfs -o size=4G tmpfs /var/opt/mssql/tempdb/
 
 
 
+# let's check the mount
+sudo df -h
+
+
+
+# can add to /etc/fstab to make it persistent across reboots
+cat /etc/fstab
+
+
+
 # now update tempdb to use the new location
 ALTER DATABASE tempdb
 MODIFY FILE (NAME = tempdev, FILENAME = '/var/opt/mssql/tempdb/tempdb.mdf');
