@@ -2,6 +2,7 @@ USE [tpcc];
 GO
 
 
+
 -- switch statistics time on to see the time taken when we rollback
 SET STATISTICS TIME ON
 

@@ -20,7 +20,7 @@ WITH (MAX_DURATION = 60 MINUTES)
 
 
 -- confirm event
-SELECT * FROM sys.server_event_sessions;
+SELECT [name], [max_duration], * FROM sys.server_event_sessions;
 
 
 

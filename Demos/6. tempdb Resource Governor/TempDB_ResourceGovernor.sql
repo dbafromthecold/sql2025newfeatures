@@ -3,19 +3,20 @@ GO
 
 
 
--- let's create a resource pool, no limits being set here - CONFIRM THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- let's create a resource pool
 CREATE RESOURCE POOL [TempDBPool]
 GO
 
 
 
 -- create a workload group that uses the pool
-ALTER WORKLOAD GROUP TempDBGroup
+CREATE WORKLOAD GROUP TempDBGroup
 WITH
     ( IMPORTANCE = MEDIUM,
       GROUP_MAX_TEMPDB_DATA_MB = 0.5)
       --GROUP_MAX_TEMPDB_DATA_PERCENT = value)
-USING [TempDBPool]
+USING [TempDBPool];
+GO
 
 
 
@@ -43,7 +44,10 @@ GO
 
 
 
--- run a query in SSMS
+-- run a query in new window in SSMS
+USE [tpcc];
+GO
+
 BEGIN TRANSACTION
 
 SELECT TOP (1000000) * INTO #TempTable
@@ -51,8 +55,11 @@ FROM [dbo].[order_line];
 
 UPDATE #TempTable
 SET ol_amount = ol_amount + 1
+
 --ROLLBACK
 --COMMIT
+
+
 
 
 
@@ -66,17 +73,24 @@ SELECT
 FROM sys.dm_exec_sessions AS s
 JOIN sys.dm_resource_governor_workload_groups AS g ON s.group_id = g.group_id
 JOIN sys.dm_resource_governor_resource_pools   AS p ON g.pool_id  = p.pool_id
-WHERE s.session_id = XXX
+WHERE s.session_id = XX;
+GO
+
+
+
+-- kill other session
+KILL XX
 
 
 
 -- clean up
 ALTER RESOURCE GOVERNOR WITH (CLASSIFIER_FUNCTION = NULL);
-ALTER RESOURCE GOVERNOR RECONFIGURE;
+GO
+DROP WORKLOAD GROUP [TempDBGroup];
 GO
 DROP RESOURCE POOL [TempDBPool]
 GO
-DROP WORKLOAD GROUP [TempDBGroup];
+ALTER RESOURCE GOVERNOR RECONFIGURE;
 GO
 DROP FUNCTION dbo.rg_classifier_tempdb;
 GO

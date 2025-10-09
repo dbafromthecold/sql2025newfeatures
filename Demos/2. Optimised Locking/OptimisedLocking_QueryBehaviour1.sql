@@ -4,8 +4,11 @@ GO
 
 
 -- drop and recreate the database
-ALTER DATABASE [OptimizedLockingDemo] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
-DROP DATABASE IF EXISTS [OptimizedLockingDemo];
+IF EXISTS(SELECT 1 FROM sys.[databases] WHERE [name] = 'OptimizedLockingDemo')
+BEGIN
+    ALTER DATABASE [OptimizedLockingDemo] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+    DROP DATABASE [OptimizedLockingDemo];
+END
 GO
 
 
@@ -70,10 +73,24 @@ COMMIT TRANSACTION;
 
 
 
--- let's do this again but with optimized locking enabled
-ALTER DATABASE [OptimizedLockingDemo] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
-DROP DATABASE IF EXISTS [OptimizedLockingDemo];
+-- confirm data
+SELECT * FROM dbo.TestTable;
 GO
+
+
+
+
+-- let's do this again but with optimized locking enabled
+USE [master];
+GO
+
+IF EXISTS(SELECT 1 FROM sys.[databases] WHERE [name] = 'OptimizedLockingDemo')
+BEGIN
+    ALTER DATABASE [OptimizedLockingDemo] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+    DROP DATABASE [OptimizedLockingDemo];
+END
+GO
+
 
 
 CREATE DATABASE [OptimizedLockingDemo];
@@ -139,3 +156,9 @@ WHERE ColA = 'A';
 
 -- commit transaction
 COMMIT TRANSACTION;
+
+
+
+-- confirm data in the table
+SELECT * FROM dbo.TestTable;
+GO

@@ -55,7 +55,12 @@ sudo systemctl restart mssql-server
 
 
 
-# confirm tempdb is running on tmpgfs
+# confirm SQL Server is running
+sudo systemctl status mssql-server
+
+
+
+# confirm tempdb is running on tmpfs
 SELECT [name], physical_name
 FROM sys.master_files
 WHERE database_id = 2;
@@ -68,7 +73,7 @@ ALTER DATABASE tempdb
 MODIFY FILE (NAME = tempdev, FILENAME = '/var/opt/mssql/data/tempdb.mdf');
 
 ALTER DATABASE tempdb
-MODIFY FILE (NAME = tempdev2, FILENAME = '/var/opt/mssql/data//tempdb2.mdf');
+MODIFY FILE (NAME = tempdev2, FILENAME = '/var/opt/mssql/data/tempdb2.mdf');
 
 ALTER DATABASE tempdb
 MODIFY FILE (NAME = tempdev3, FILENAME = '/var/opt/mssql/data/tempdb3.mdf');

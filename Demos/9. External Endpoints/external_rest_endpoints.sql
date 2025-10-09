@@ -4,14 +4,14 @@ GO
 
 
 -- enable the stored procedure
-EXECUTE sp_configure 'externalrest endpoint enabled', 1;
+EXECUTE sp_configure 'external rest endpoint enabled', 1;
 RECONFIGURE WITH OVERRIDE;
 GO
 
 
 
 -- confirm 
-EXECUTE sp_configure 'external rest endpoint enabled':
+EXECUTE sp_configure 'external rest endpoint enabled';
 GO
 
 

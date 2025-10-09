@@ -67,6 +67,7 @@ GROUP BY
 	rs.last_execution_time
 ORDER BY
     rs.last_execution_time DESC;
+GO
 
 
 
@@ -74,6 +75,7 @@ ORDER BY
 EXEC sys.sp_query_store_set_hints
      @query_id = X,
      @query_hints = N'OPTION (USE HINT (''ABORT_QUERY_EXECUTION''))';
+GO
 
 
 
@@ -84,7 +86,8 @@ SELECT qsh.query_id,
       FROM sys.query_store_query_hints AS qsh
 INNER JOIN sys.query_store_query AS q ON qsh.query_id = q.query_id
 INNER JOIN sys.query_store_query_text AS qt ON q.query_text_id = qt.query_text_id
-    WHERE UPPER(qsh.query_hint_text) LIKE '%ABORT[_]QUERY[_]EXECUTION%'
+    WHERE UPPER(qsh.query_hint_text) LIKE '%ABORT[_]QUERY[_]EXECUTION%';
+GO
 
 
 

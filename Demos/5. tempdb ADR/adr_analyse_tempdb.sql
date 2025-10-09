@@ -28,7 +28,13 @@ CHECKPOINT
 
 
 
--- now active transaction open in the database?
+-- let's see how much log is in use now
+SELECT * FROM sys.dm_db_log_space_usage
+GO
+
+
+
+-- active transaction open in the database?
 SELECT
     d.name,
     d.log_reuse_wait,
@@ -36,6 +42,10 @@ SELECT
 FROM sys.databases AS d
 WHERE d.name = 'tempdb';
 GO
+
+
+
+-- let's go and rollback the transaction
 
 
 
