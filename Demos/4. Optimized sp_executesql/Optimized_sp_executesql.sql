@@ -1,4 +1,4 @@
-USE [AdventureWorks2022];
+USE [AdventureWorks];
 GO
 
 
@@ -20,14 +20,14 @@ GO
 
 
 -- here's the test query
-EXECUTE sp_executesql N'SELECT * FROM AdventureWorks2022.HumanResources.Employee
+EXECUTE sp_executesql N'SELECT * FROM AdventureWorks.HumanResources.Employee
     WHERE BusinessEntityID = @level', N'@level TINYINT', @level = 109;
 
 
 
 
 -- we'll execute it in parallel using ostress
---ostress -S"Z-AP-SQL-04" -d"AdventureWorks2022" -E -n32 -r1 -Q"EXECUTE sp_executesql N'SELECT * FROM AdventureWorks2022.HumanResources.Employee WHERE BusinessEntityID = @level', N'@level TINYINT', @level = 109;"
+--ostress -S"AP-SQL2025-01" -d"AdventureWorks2022" -E -n32 -r1 -T146 -Q"EXECUTE sp_executesql N'SELECT * FROM AdventureWorks2022.HumanResources.Employee WHERE BusinessEntityID = @level', N'@level TINYINT', @level = 109;"
 
 
 
@@ -55,7 +55,7 @@ CROSS APPLY
 CROSS APPLY
     sys.[dm_exec_sql_text](cp.plan_handle) AS qt
 WHERE
-    qt.text LIKE ('(@level TINYINT)SELECT * FROM AdventureWorks2022%')
+    qt.text LIKE ('(@level TINYINT)SELECT * FROM AdventureWorks%')
 ORDER BY
     cp.usecounts DESC;
 GO
@@ -80,7 +80,7 @@ GO
 
 
 -- and we'll use ostress again to execute the query in parallel
---ostress -S"Z-AP-SQL-04" -d"AdventureWorks2022" -E -n32 -r1 -Q"EXECUTE sp_executesql N'SELECT * FROM AdventureWorks2022.HumanResources.Employee WHERE BusinessEntityID = @level', N'@level TINYINT', @level = 109;"
+--ostress -S"AP-SQL-2025" -d"AdventureWorks" -E -n32 -r1 -T146 -Q"EXECUTE sp_executesql N'SELECT * FROM AdventureWorks2022.HumanResources.Employee WHERE BusinessEntityID = @level', N'@level TINYINT', @level = 109;"
 
 
 
@@ -108,7 +108,7 @@ CROSS APPLY
 CROSS APPLY
     sys.[dm_exec_sql_text](cp.plan_handle) AS qt
 WHERE
-    qt.text LIKE ('(@level TINYINT)SELECT * FROM AdventureWorks2022%')
+    qt.text LIKE ('(@level TINYINT)SELECT * FROM AdventureWorks%')
 ORDER BY
     cp.usecounts DESC;
 GO

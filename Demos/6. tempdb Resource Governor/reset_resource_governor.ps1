@@ -3,13 +3,13 @@
 
 
 # set variables
-$SourceSql  = "Z-AP-SQL-04"
+$SourceSql  = "AP-SQL2025-01"
 
 
 
 # connect to SQL instances
-$SqlCredential = Import-CliXml -Path "E:\credentials\SA.cred"
-$SourceSqlConnection = Connect-DbaInstance -SqlInstance $SourceSql -SqlCredential $SqlCredential
+$SqlCredential = Get-Credential
+$SourceSqlConnection = Connect-DbaInstance -SqlInstance $SourceSql -SqlCredential $SqlCredential -TrustServerCertificate
 
 
 
