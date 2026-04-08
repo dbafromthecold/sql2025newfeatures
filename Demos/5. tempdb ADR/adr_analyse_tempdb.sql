@@ -14,6 +14,13 @@ SELECT name,is_accelerated_database_recovery_on FROM sys.databases
 GO
 
 
+
+-- disable if needed
+ALTER DATABASE [tempdb] SET ACCELERATED_DATABASE_RECOVERY = OFF
+GO
+
+
+
 -- we'll run a query using the other script (adr_run_query.sql) that inserts and updates data in a temp table
 
 
@@ -21,6 +28,7 @@ GO
 -- now let's see how much log is in use
 SELECT * FROM sys.dm_db_log_space_usage
 GO
+
 
 
 -- does a check point reduce the log usage?

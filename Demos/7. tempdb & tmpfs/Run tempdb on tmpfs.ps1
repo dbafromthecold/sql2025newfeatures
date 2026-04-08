@@ -2,7 +2,7 @@
 
 
 # ssh into the server
-ssh SERVERNAME
+ssh ap-linux-01
 
 
 
